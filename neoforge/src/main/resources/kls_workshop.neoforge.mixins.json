@@ -1,11 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.example.examplemod.mixin",
+  "package": "com.koshinls.klsworkshop.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "com.example.klsworkshop.mixin.MixinTitleScreen"
+    "MixinTitleScreen"
   ],
   "server": [],
   "injectors": {
