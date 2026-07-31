@@ -8,8 +8,9 @@
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "homepage": "https://koshinls.github.io/koshin-ls",
+        "issues": "https://github.com/koshinls/klsworkshop/issues",
+        "sources": "https://github.com/koshinls/klsworkshop"
     },
     "license": "${license}",
     "icon": "${mod_id}.png",
