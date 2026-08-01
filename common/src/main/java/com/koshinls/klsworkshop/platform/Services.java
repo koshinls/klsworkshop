@@ -3,8 +3,10 @@ package com.koshinls.klsworkshop.platform;
 import com.koshinls.klsworkshop.Constants;
 import com.koshinls.klsworkshop.platform.services.IPlatformHelper;
 import com.koshinls.klsworkshop.platform.services.IRegistryHelper;
+import com.koshinls.klsworkshop.platform.services.ICreativeTabHelper;
 
 import java.util.ServiceLoader;
+
 
 // Service loaders are a built-in Java feature that allow us to locate implementations of an interface that vary from one
 // environment to another. In the context of MultiLoader we use this feature to access a mock API in the common code that
@@ -16,6 +18,7 @@ public class Services {
     // mod is loaded.
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
     public static final IRegistryHelper REGISTRY = load(IRegistryHelper.class);
+    public static final ICreativeTabHelper CREATIVE_TAB = load(ICreativeTabHelper.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.

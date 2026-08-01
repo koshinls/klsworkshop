@@ -18,6 +18,7 @@ public class ForgeRegistryHelper implements IRegistryHelper {
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
+        ForgeCreativeTabHelper.register(bus);
     }
 
     @Override
