@@ -1,5 +1,6 @@
 package com.koshinls.klsworkshop;
 
+import com.koshinls.klsworkshop.platform.NeoForgeDataComponentHelper;
 import com.koshinls.klsworkshop.platform.NeoForgeRegistryHelper;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -12,6 +13,7 @@ public class ExampleMod {
 
         NeoForgeRegistryHelper.register(eventBus);
         NeoForgeCreativeTabHelper.register(eventBus);
+        NeoForgeDataComponentHelper.register(eventBus);
 
         Constants.LOG.info("Hello NeoForge world!");
         CommonClass.init();

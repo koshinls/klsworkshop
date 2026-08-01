@@ -1,5 +1,7 @@
 package com.koshinls.klsworkshop;
 
+import com.koshinls.klsworkshop.platform.ForgeCreativeTabHelper;
+import com.koshinls.klsworkshop.platform.ForgeDataComponentHelper;
 import com.koshinls.klsworkshop.platform.ForgeRegistryHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -9,9 +11,11 @@ public class ExampleMod {
 
     public ExampleMod() {
 
-        ForgeRegistryHelper.register(
-                FMLJavaModLoadingContext.get().getModEventBus()
-        );
+        var bus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ForgeRegistryHelper.register(bus);
+        ForgeCreativeTabHelper.register(bus);
+        ForgeDataComponentHelper.register(bus);
 
         Constants.LOG.info("Hello Forge world!");
         CommonClass.init();
