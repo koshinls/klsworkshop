@@ -3,6 +3,7 @@ package com.koshinls.klsworkshop;
 import com.koshinls.klsworkshop.platform.ForgeCreativeTabHelper;
 import com.koshinls.klsworkshop.platform.ForgeDataComponentHelper;
 import com.koshinls.klsworkshop.platform.ForgeRegistryHelper;
+import com.koshinls.klsworkshop.platform.Services;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -19,5 +20,6 @@ public class ExampleMod {
 
         Constants.LOG.info("Hello Forge world!");
         CommonClass.init();
+        Services.INPUT.init();
     }
 }

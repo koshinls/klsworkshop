@@ -1,5 +1,6 @@
 package com.koshinls.klsworkshop;
 
+import com.koshinls.klsworkshop.platform.Services;
 import net.fabricmc.api.ModInitializer;
 
 public class ExampleMod implements ModInitializer {
@@ -14,5 +15,6 @@ public class ExampleMod implements ModInitializer {
         // Use Fabric to bootstrap the Common mod.
         Constants.LOG.info("Hello Fabric world!");
         CommonClass.init();
+        Services.INPUT.init();
     }
 }

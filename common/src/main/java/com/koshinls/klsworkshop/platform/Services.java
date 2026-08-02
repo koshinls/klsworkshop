@@ -1,10 +1,7 @@
 package com.koshinls.klsworkshop.platform;
 
 import com.koshinls.klsworkshop.Constants;
-import com.koshinls.klsworkshop.platform.services.IPlatformHelper;
-import com.koshinls.klsworkshop.platform.services.IRegistryHelper;
-import com.koshinls.klsworkshop.platform.services.ICreativeTabHelper;
-import com.koshinls.klsworkshop.platform.services.IDataComponentHelper;
+import com.koshinls.klsworkshop.platform.services.*;
 
 import java.util.ServiceLoader;
 
@@ -21,6 +18,7 @@ public class Services {
     public static final IRegistryHelper REGISTRY = load(IRegistryHelper.class);
     public static final ICreativeTabHelper CREATIVE_TAB = load(ICreativeTabHelper.class);
     public static final IDataComponentHelper DATA_COMPONENTS = load(IDataComponentHelper.class);
+    public static final IInputHelper INPUT = load(IInputHelper.class);
 
     // This code is used to load a service for the current environment. Your implementation of the service must be defined
     // manually by including a text file in META-INF/services named with the fully qualified class name of the service.
