@@ -2,6 +2,7 @@ package com.koshinls.klsworkshop.component;
 
 import com.koshinls.klsworkshop.platform.Services;
 import com.koshinls.klsworkshop.registry.RegistryEntry;
+import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import net.minecraft.core.component.DataComponentType;
 
 public class ModDataComponents {

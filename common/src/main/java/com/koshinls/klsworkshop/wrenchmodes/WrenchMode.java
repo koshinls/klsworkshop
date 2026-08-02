@@ -1,4 +1,4 @@
-package com.koshinls.klsworkshop.component;
+package com.koshinls.klsworkshop.wrenchmodes;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
