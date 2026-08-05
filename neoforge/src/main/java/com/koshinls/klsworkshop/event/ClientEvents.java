@@ -1,6 +1,8 @@
 package com.koshinls.klsworkshop.event;
 
 import com.koshinls.klsworkshop.item.CreativeWrenchItem;
+import com.koshinls.klsworkshop.network.NetworkManager;
+import com.koshinls.klsworkshop.network.packet.NextModePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -32,9 +34,9 @@ public class ClientEvents {
         double scroll = event.getScrollDeltaY();
 
         if (scroll > 0) {
-            CreativeWrenchItem.nextMode(stack);
+            NetworkManager.sendToServer(new NextModePacket(true));
         } else if (scroll < 0) {
-            CreativeWrenchItem.previousMode(stack);
+            NetworkManager.sendToServer(new NextModePacket(false));
         }
 
         player.displayClientMessage(
