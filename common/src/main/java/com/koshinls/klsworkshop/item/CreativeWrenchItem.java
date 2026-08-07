@@ -3,12 +3,17 @@ package com.koshinls.klsworkshop.item;
 import com.koshinls.klsworkshop.component.ModDataComponents;
 import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import com.koshinls.klsworkshop.wrenchmodes.WrenchModeHandler;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 public class CreativeWrenchItem extends Item {
 
@@ -34,6 +39,22 @@ public class CreativeWrenchItem extends Item {
     }
 
     @Override
+    public void appendHoverText(
+            ItemStack stack,
+            TooltipContext context,
+            List<Component> tooltip,
+            TooltipFlag flag
+    ) {
+        super.appendHoverText(stack, context, tooltip, flag);
+
+        WrenchMode mode = getMode(stack);
+
+        tooltip.add(Component.empty());
+        tooltip.add(mode.getDisplayName());
+        tooltip.add(mode.getDescription());
+    }
+
+    @Override
     public InteractionResultHolder<ItemStack> use(
             Level level,
             Player player,
@@ -50,6 +71,8 @@ public class CreativeWrenchItem extends Item {
         );
 
         return InteractionResultHolder.success(stack);
-    }
 
+
+
+    }
 }

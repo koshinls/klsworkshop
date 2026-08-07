@@ -2,6 +2,7 @@ package com.koshinls.klsworkshop.network;
 
 import com.koshinls.klsworkshop.item.CreativeWrenchItem;
 import com.koshinls.klsworkshop.network.packet.NextModePacket;
+import com.koshinls.klsworkshop.network.packet.ShowModePacket;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -32,6 +33,24 @@ public class NetworkHandler {
                     } else {
                         CreativeWrenchItem.previousMode(stack);
                     }
+                }
+        );
+
+        registrar.playToServer(
+                ShowModePacket.TYPE,
+                ShowModePacket.STREAM_CODEC,
+                (packet, context) -> {
+
+                    var player = context.player();
+                    var stack = player.getMainHandItem();
+
+                    if (!(stack.getItem() instanceof CreativeWrenchItem))
+                        return;
+
+                    player.displayClientMessage(
+                            CreativeWrenchItem.getMode(stack).getDisplayName(),
+                            true
+                    );
                 }
         );
     }

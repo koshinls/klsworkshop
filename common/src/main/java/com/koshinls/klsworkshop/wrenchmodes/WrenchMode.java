@@ -2,21 +2,62 @@ package com.koshinls.klsworkshop.wrenchmodes;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 
 public enum WrenchMode {
 
-    DEBUG("Debug"),
-    TERRAFORM("Terraform"),
-    BUILD("Build"),
-    COPY_PASTE("Copy/Paste"),
-    LIGHT("Light"),
-    NBT("NBT"),
-    SETTINGS("Settings");
+    DEBUG(
+            Component.literal("Debug")
+                    .withStyle(ChatFormatting.RED),
+            Component.literal("Rotate and edit block states.")
+                    .withStyle(ChatFormatting.RED)
+    ),
+
+    TERRAFORM(
+            Component.literal("Terraform")
+                    .withStyle(ChatFormatting.YELLOW),
+            Component.literal("Shape the terrain.")
+                    .withStyle(ChatFormatting.YELLOW)
+    ),
+
+    BUILD(
+            Component.literal("Build")
+                    .withStyle(ChatFormatting.GREEN),
+            Component.literal("Advanced building tools.")
+                    .withStyle(ChatFormatting.GREEN)
+    ),
+
+    COPY_PASTE(
+            Component.literal("Copy/Paste")
+                    .withStyle(ChatFormatting.AQUA),
+            Component.literal("Copy and place structures.")
+                    .withStyle(ChatFormatting.AQUA)
+    ),
+
+    LIGHT(
+            Component.literal("Light")
+                    .withStyle(ChatFormatting.BLUE),
+            Component.literal("Lighting tools.")
+                    .withStyle(ChatFormatting.BLUE)
+    ),
+
+    NBT(
+            Component.literal("NBT")
+                    .setStyle(Style.EMPTY.withColor(0xFF00FF)),
+            Component.literal("Inspect and edit NBT.")
+                    .setStyle(Style.EMPTY.withColor(0xFF00FF))
+    ),
+
+    SETTINGS(
+            Component.literal("Settings")
+                    .withStyle(ChatFormatting.WHITE),
+            Component.literal("Configure the wrench.")
+                    .withStyle(ChatFormatting.WHITE)
+    );
 
     public static final Codec<WrenchMode> CODEC =
             Codec.STRING.xmap(
@@ -27,49 +68,27 @@ public enum WrenchMode {
     public static final StreamCodec<ByteBuf, WrenchMode> STREAM_CODEC =
             ByteBufCodecs.fromCodec(CODEC);
 
+    private final Component displayName;
+    private final Component description;
+
+    WrenchMode(Component displayName, Component description) {
+        this.displayName = displayName;
+        this.description = description;
+    }
+
+    public Component getDisplayName() {
+        return displayName;
+    }
+
+    public Component getDescription() {
+        return description;
+    }
+
     public WrenchMode next() {
         return values()[(ordinal() + 1) % values().length];
     }
 
     public WrenchMode previous() {
         return values()[(ordinal() - 1 + values().length) % values().length];
-    }
-
-    private final String displayName;
-
-    WrenchMode(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public Component getDisplayName() {
-        return switch (this) {
-            case DEBUG ->
-                    Component.literal("Debug")
-                            .withStyle(ChatFormatting.RED);
-
-            case TERRAFORM ->
-                    Component.literal("Terraform")
-                            .withStyle(ChatFormatting.YELLOW);
-
-            case BUILD ->
-                    Component.literal("Build")
-                            .withStyle(ChatFormatting.GREEN);
-
-            case COPY_PASTE ->
-                    Component.literal("Copy/Paste")
-                            .withStyle(ChatFormatting.AQUA);
-
-            case LIGHT ->
-                    Component.literal("Light")
-                            .withStyle(ChatFormatting.BLUE);
-
-            case NBT ->
-                    Component.literal("NBT")
-                            .setStyle(Style.EMPTY.withColor(0xFF00FF));
-
-            case SETTINGS ->
-                    Component.literal("Settings")
-                            .withStyle(ChatFormatting.WHITE);
-        };
     }
 }

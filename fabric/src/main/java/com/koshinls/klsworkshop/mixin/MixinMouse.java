@@ -2,6 +2,7 @@ package com.koshinls.klsworkshop.mixin;
 
 import com.koshinls.klsworkshop.item.CreativeWrenchItem;
 import com.koshinls.klsworkshop.network.packet.NextModePacket;
+import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.world.item.ItemStack;
@@ -39,15 +40,21 @@ public class MixinMouse {
         if (!(stack.getItem() instanceof CreativeWrenchItem))
             return;
 
-        if (yOffset > 0) {
-            NetworkManager.sendToServer(new NextModePacket(true));
-        } else if (yOffset < 0) {
-            NetworkManager.sendToServer(new NextModePacket(false));
-        }
+        WrenchMode current = CreativeWrenchItem.getMode(stack);
+
+        boolean forward = yOffset > 0;
+
+        WrenchMode next = forward
+                ? current.next()
+                : current.previous();
 
         minecraft.player.displayClientMessage(
-                CreativeWrenchItem.getMode(stack).getDisplayName(),
+                next.getDisplayName(),
                 true
+        );
+
+        NetworkManager.sendToServer(
+                new NextModePacket(forward)
         );
 
         ci.cancel();

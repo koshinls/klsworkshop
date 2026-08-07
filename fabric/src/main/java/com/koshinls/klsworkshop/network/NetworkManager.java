@@ -2,6 +2,7 @@ package com.koshinls.klsworkshop.network;
 
 import com.koshinls.klsworkshop.item.CreativeWrenchItem;
 import com.koshinls.klsworkshop.network.packet.NextModePacket;
+import com.koshinls.klsworkshop.network.packet.ShowModePacket;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -12,8 +13,33 @@ public class NetworkManager {
     public static void init() {
 
         PayloadTypeRegistry.playC2S().register(
+                ShowModePacket.TYPE,
+                ShowModePacket.STREAM_CODEC
+        );
+
+        PayloadTypeRegistry.playC2S().register(
                 NextModePacket.TYPE,
                 NextModePacket.STREAM_CODEC
+        );
+
+        ServerPlayNetworking.registerGlobalReceiver(
+                ShowModePacket.TYPE,
+                (packet, context) -> {
+
+                    context.server().execute(() -> {
+
+                        var player = context.player();
+                        ItemStack stack = player.getMainHandItem();
+
+                        if (!(stack.getItem() instanceof CreativeWrenchItem))
+                            return;
+
+                        player.displayClientMessage(
+                                CreativeWrenchItem.getMode(stack).getDisplayName(),
+                                true
+                        );
+                    });
+                }
         );
 
         ServerPlayNetworking.registerGlobalReceiver(
@@ -23,7 +49,6 @@ public class NetworkManager {
                     context.server().execute(() -> {
 
                         var player = context.player();
-
                         ItemStack stack = player.getMainHandItem();
 
                         if (!(stack.getItem() instanceof CreativeWrenchItem))
@@ -41,5 +66,9 @@ public class NetworkManager {
 
     public static void sendToServer(NextModePacket packet) {
         ClientPlayNetworking.send(packet);
+    }
+
+    public static void showCurrentMode() {
+        ClientPlayNetworking.send(new ShowModePacket());
     }
 }

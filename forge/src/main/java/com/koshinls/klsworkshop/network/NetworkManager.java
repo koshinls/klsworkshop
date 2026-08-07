@@ -2,6 +2,7 @@ package com.koshinls.klsworkshop.network;
 
 import com.koshinls.klsworkshop.Constants;
 import com.koshinls.klsworkshop.network.packet.NextModePacket;
+import com.koshinls.klsworkshop.network.packet.ShowModePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.PacketDistributor;
@@ -24,6 +25,11 @@ public class NetworkManager {
                             NextModePacket.STREAM_CODEC,
                             ForgeNetworkHandler::handleNextMode
                     )
+                    .add(
+                            ShowModePacket.class,
+                            ShowModePacket.STREAM_CODEC,
+                            ForgeNetworkHandler::handleShowMode
+                    )
                     .build();
 
     public static void init() {
@@ -31,5 +37,9 @@ public class NetworkManager {
 
     public static void sendToServer(NextModePacket packet) {
         CHANNEL.send(packet, PacketDistributor.SERVER.noArg());
+    }
+
+    public static void showCurrentMode() {
+        CHANNEL.send(new ShowModePacket(), PacketDistributor.SERVER.noArg());
     }
 }
