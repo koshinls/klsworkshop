@@ -1,5 +1,6 @@
 package com.koshinls.klsworkshop;
 
+import com.koshinls.klsworkshop.network.NetworkManager;
 import com.koshinls.klsworkshop.platform.ForgeCreativeTabHelper;
 import com.koshinls.klsworkshop.platform.ForgeDataComponentHelper;
 import com.koshinls.klsworkshop.platform.ForgeRegistryHelper;
@@ -21,5 +22,6 @@ public class ExampleMod {
         Constants.LOG.info("Hello Forge world!");
         CommonClass.init();
         Services.INPUT.init();
+        NetworkManager.init();
     }
 }
