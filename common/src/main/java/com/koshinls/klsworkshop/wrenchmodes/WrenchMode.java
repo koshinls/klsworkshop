@@ -57,6 +57,13 @@ public enum WrenchMode {
                     .withStyle(ChatFormatting.WHITE),
             Component.literal("Configure the wrench.")
                     .withStyle(ChatFormatting.WHITE)
+    ),
+
+    UTILITY(
+            Component.literal("Utility")
+                    .withStyle(ChatFormatting.GOLD),
+            Component.literal("Developer and utility tools.")
+                    .withStyle(ChatFormatting.GOLD)
     );
 
     public static final Codec<WrenchMode> CODEC =

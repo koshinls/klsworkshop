@@ -37,6 +37,9 @@ public class WrenchModeHandler {
             case NBT ->
                     NbtMode.use(level, player, hand);
 
+            case UTILITY ->
+                    UtilityMode.use(level, player, hand);
+
             default ->
                     player.displayClientMessage(
                             Component.literal("Unknown mode!"),
