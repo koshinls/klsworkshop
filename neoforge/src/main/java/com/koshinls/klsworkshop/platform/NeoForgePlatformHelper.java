@@ -3,6 +3,8 @@ package com.koshinls.klsworkshop.platform;
 import com.koshinls.klsworkshop.platform.services.IPlatformHelper;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
+import com.koshinls.klsworkshop.settings.SettingsScreen;
+import net.minecraft.client.Minecraft;
 
 public class NeoForgePlatformHelper implements IPlatformHelper {
 
@@ -22,5 +24,15 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     public boolean isDevelopmentEnvironment() {
 
         return !FMLLoader.isProduction();
+    }
+
+    @Override
+    public void openSettingsScreen() {
+
+        Minecraft minecraft = Minecraft.getInstance();
+
+        minecraft.setScreen(
+                new SettingsScreen(minecraft.screen)
+        );
     }
 }

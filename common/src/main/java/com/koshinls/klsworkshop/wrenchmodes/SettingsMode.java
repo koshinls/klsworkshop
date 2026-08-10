@@ -1,17 +1,21 @@
 package com.koshinls.klsworkshop.wrenchmodes;
 
-import net.minecraft.network.chat.Component;
+import com.koshinls.klsworkshop.platform.Services;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class SettingsMode {
 
-    public static void use(Level level, Player player, InteractionHand hand) {
+    public static void use(
+            Level level,
+            Player player,
+            InteractionHand hand
+    ) {
 
-        player.displayClientMessage(
-                Component.literal("For later!"),
-                true
-        );
+        if (!level.isClientSide())
+            return;
+
+        Services.PLATFORM.openSettingsScreen();
     }
 }

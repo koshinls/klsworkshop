@@ -47,9 +47,9 @@ public enum WrenchMode {
 
     NBT(
             Component.literal("NBT")
-                    .setStyle(Style.EMPTY.withColor(0xFF00FF)),
+                    .withStyle(ChatFormatting.DARK_PURPLE),
             Component.literal("Inspect and edit NBT.")
-                    .setStyle(Style.EMPTY.withColor(0xFF00FF))
+                    .withStyle(ChatFormatting.DARK_PURPLE)
     ),
 
     SETTINGS(
@@ -61,9 +61,9 @@ public enum WrenchMode {
 
     UTILITY(
             Component.literal("Utility")
-                    .withStyle(ChatFormatting.GOLD),
+                    .setStyle(Style.EMPTY.withColor(0xFF00FF)),
             Component.literal("Developer and utility tools.")
-                    .withStyle(ChatFormatting.GOLD)
+                    .setStyle(Style.EMPTY.withColor(0xFF00FF))
     );
 
     public static final Codec<WrenchMode> CODEC =
