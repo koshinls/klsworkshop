@@ -1,5 +1,6 @@
 package com.koshinls.klsworkshop.wrenchmodes;
 
+import com.koshinls.klsworkshop.settings.SettingsState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +14,9 @@ public class WrenchModeHandler {
             Player player,
             InteractionHand hand
     ) {
+
+        if (!SettingsState.isEnabled(mode))
+            return;
 
         switch (mode) {
 

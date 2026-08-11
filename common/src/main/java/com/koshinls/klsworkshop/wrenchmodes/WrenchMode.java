@@ -52,18 +52,18 @@ public enum WrenchMode {
                     .withStyle(ChatFormatting.DARK_PURPLE)
     ),
 
-    SETTINGS(
-            Component.literal("Settings")
-                    .withStyle(ChatFormatting.WHITE),
-            Component.literal("Configure the wrench.")
-                    .withStyle(ChatFormatting.WHITE)
-    ),
-
     UTILITY(
             Component.literal("Utility")
                     .setStyle(Style.EMPTY.withColor(0xFF00FF)),
             Component.literal("Developer and utility tools.")
                     .setStyle(Style.EMPTY.withColor(0xFF00FF))
+    ),
+
+    SETTINGS(
+            Component.literal("Settings")
+                    .withStyle(ChatFormatting.WHITE),
+            Component.literal("Configure the wrench.")
+                    .withStyle(ChatFormatting.WHITE)
     );
 
     public static final Codec<WrenchMode> CODEC =

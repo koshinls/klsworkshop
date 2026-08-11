@@ -4,12 +4,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import com.koshinls.klsworkshop.settings.SettingsState;
 
 public class DebugSettingsScreen extends Screen {
 
     private final Screen parent;
-
-    private boolean debugEnabled = true;
 
     public DebugSettingsScreen(Screen parent) {
         super(Component.literal("Debug Settings"));
@@ -23,7 +22,7 @@ public class DebugSettingsScreen extends Screen {
                 Button.builder(
                                 getDebugButtonText(),
                                 button -> {
-                                    debugEnabled = !debugEnabled;
+                                    SettingsState.debugEnabled = !SettingsState.debugEnabled;
                                     button.setMessage(getDebugButtonText());
                                 }
                         )
@@ -55,7 +54,7 @@ public class DebugSettingsScreen extends Screen {
 
         return Component.literal(
                 "Debug Mode: " +
-                        (debugEnabled ? "ON" : "OFF")
+                        (SettingsState.debugEnabled ? "ON" : "OFF")
         );
     }
 

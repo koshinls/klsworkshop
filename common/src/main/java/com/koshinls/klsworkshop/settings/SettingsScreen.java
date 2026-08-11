@@ -1,11 +1,17 @@
 package com.koshinls.klsworkshop.settings;
 
+import com.koshinls.klsworkshop.settings.screens.BuildSettingsScreen;
+import com.koshinls.klsworkshop.settings.screens.CopyPasteSettingsScreen;
+import com.koshinls.klsworkshop.settings.screens.DebugSettingsScreen;
+import com.koshinls.klsworkshop.settings.screens.LightSettingsScreen;
+import com.koshinls.klsworkshop.settings.screens.NbtSettingsScreen;
+import com.koshinls.klsworkshop.settings.screens.TerraformSettingsScreen;
+import com.koshinls.klsworkshop.settings.screens.UtilitySettingsScreen;
 import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import com.koshinls.klsworkshop.settings.screens.DebugSettingsScreen;
 
 public class SettingsScreen extends Screen {
 
@@ -45,15 +51,7 @@ public class SettingsScreen extends Screen {
             this.addRenderableWidget(
                     Button.builder(
                                     mode.getDisplayName(),
-                                    button -> {
-
-                                        if (mode == WrenchMode.DEBUG) {
-                                            this.minecraft.setScreen(
-                                                    new DebugSettingsScreen(this)
-                                            );
-                                        }
-
-                                    }
+                                    button -> openModeSettings(mode)
                             )
                             .bounds(
                                     x,
@@ -78,6 +76,55 @@ public class SettingsScreen extends Screen {
                         )
                         .build()
         );
+    }
+
+    private void openModeSettings(WrenchMode mode) {
+
+        if (this.minecraft == null) {
+            return;
+        }
+
+        switch (mode) {
+
+            case DEBUG ->
+                    this.minecraft.setScreen(
+                            new DebugSettingsScreen(this)
+                    );
+
+            case TERRAFORM ->
+                    this.minecraft.setScreen(
+                            new TerraformSettingsScreen(this)
+                    );
+
+            case BUILD ->
+                    this.minecraft.setScreen(
+                            new BuildSettingsScreen(this)
+                    );
+
+            case COPY_PASTE ->
+                    this.minecraft.setScreen(
+                            new CopyPasteSettingsScreen(this)
+                    );
+
+            case LIGHT ->
+                    this.minecraft.setScreen(
+                            new LightSettingsScreen(this)
+                    );
+
+            case NBT ->
+                    this.minecraft.setScreen(
+                            new NbtSettingsScreen(this)
+                    );
+
+            case UTILITY ->
+                    this.minecraft.setScreen(
+                            new UtilitySettingsScreen(this)
+                    );
+
+            case SETTINGS -> {
+                // Already in the main Settings screen.
+            }
+        }
     }
 
     @Override
