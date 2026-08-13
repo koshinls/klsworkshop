@@ -6,11 +6,12 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [],
   "client": [
-    "MixinMinecraft"
+    "MixinMinecraft",
+    "LightBlockMixin",
+    "client.ClientLevelMixin"
   ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
   }
 }
-

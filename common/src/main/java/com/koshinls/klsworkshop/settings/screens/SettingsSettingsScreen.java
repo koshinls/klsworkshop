@@ -6,12 +6,12 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-public class LightSettingsScreen extends Screen {
+public class SettingsSettingsScreen extends Screen {
 
     private final Screen parent;
 
-    public LightSettingsScreen(Screen parent) {
-        super(Component.literal("Light Settings"));
+    public SettingsSettingsScreen(Screen parent) {
+        super(Component.literal("Settings"));
         this.parent = parent;
     }
 
@@ -20,41 +20,36 @@ public class LightSettingsScreen extends Screen {
 
         this.addRenderableWidget(
                 Button.builder(
-                                getModeButtonText(),
+                                getAllModesButtonText(),
                                 button -> {
-                                    SettingsState.lightEnabled =
-                                            !SettingsState.lightEnabled;
+
+                                    boolean allEnabled =
+                                            SettingsState.debugEnabled
+                                                    && SettingsState.terraformEnabled
+                                                    && SettingsState.buildEnabled
+                                                    && SettingsState.copyPasteEnabled
+                                                    && SettingsState.lightEnabled
+                                                    && SettingsState.nbtEnabled
+                                                    && SettingsState.utilityEnabled;
+
+                                    boolean newState = !allEnabled;
+
+                                    SettingsState.debugEnabled = newState;
+                                    SettingsState.terraformEnabled = newState;
+                                    SettingsState.buildEnabled = newState;
+                                    SettingsState.copyPasteEnabled = newState;
+                                    SettingsState.lightEnabled = newState;
+                                    SettingsState.nbtEnabled = newState;
+                                    SettingsState.utilityEnabled = newState;
 
                                     button.setMessage(
-                                            getModeButtonText()
+                                            getAllModesButtonText()
                                     );
                                 }
                         )
                         .bounds(
                                 this.width / 2 - 100,
                                 80,
-                                200,
-                                20
-                        )
-                        .build()
-        );
-
-        this.addRenderableWidget(
-                Button.builder(
-                                getLightLevelButtonText(),
-                                button -> {
-
-                                    SettingsState.lightLevel =
-                                            (SettingsState.lightLevel + 1) % 16;
-
-                                    button.setMessage(
-                                            getLightLevelButtonText()
-                                    );
-                                }
-                        )
-                        .bounds(
-                                this.width / 2 - 100,
-                                110,
                                 200,
                                 20
                         )
@@ -76,21 +71,20 @@ public class LightSettingsScreen extends Screen {
         );
     }
 
-    private Component getModeButtonText() {
+    private Component getAllModesButtonText() {
+
+        boolean allEnabled =
+                SettingsState.debugEnabled
+                        && SettingsState.terraformEnabled
+                        && SettingsState.buildEnabled
+                        && SettingsState.copyPasteEnabled
+                        && SettingsState.lightEnabled
+                        && SettingsState.nbtEnabled
+                        && SettingsState.utilityEnabled;
 
         return Component.literal(
-                "Light Mode: " +
-                        (SettingsState.lightEnabled
-                                ? "ON"
-                                : "OFF")
-        );
-    }
-
-    private Component getLightLevelButtonText() {
-
-        return Component.literal(
-                "Light Level: " +
-                        SettingsState.lightLevel
+                "All Modes: " +
+                        (allEnabled ? "ON" : "OFF")
         );
     }
 

@@ -1,10 +1,12 @@
 package com.koshinls.klsworkshop.wrenchmodes;
 
 import com.koshinls.klsworkshop.settings.SettingsState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class WrenchModeHandler {
 
@@ -50,5 +52,23 @@ public class WrenchModeHandler {
                             true
                     );
         }
+    }
+
+    public static void attack(
+            WrenchMode mode,
+            Level level,
+            Player player,
+            InteractionHand hand,
+            BlockPos pos,
+            BlockState state
+    ) {
+
+        if (!SettingsState.isEnabled(mode))
+            return;
+
+        player.displayClientMessage(
+                Component.literal("Left-click!"),
+                true
+        );
     }
 }

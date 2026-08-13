@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import com.koshinls.klsworkshop.settings.screens.SettingsSettingsScreen;
 
 public class SettingsScreen extends Screen {
 
@@ -121,9 +122,10 @@ public class SettingsScreen extends Screen {
                             new UtilitySettingsScreen(this)
                     );
 
-            case SETTINGS -> {
-                // Already in the main Settings screen.
-            }
+            case SETTINGS ->
+                    this.minecraft.setScreen(
+                            new SettingsSettingsScreen(this)
+                    );
         }
     }
 

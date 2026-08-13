@@ -4,6 +4,16 @@ import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 
 public class SettingsState {
 
+    public static boolean debugEnabled = true;
+    public static boolean terraformEnabled = true;
+    public static boolean buildEnabled = true;
+    public static boolean copyPasteEnabled = true;
+    public static boolean lightEnabled = true;
+    public static boolean nbtEnabled = true;
+    public static boolean utilityEnabled = true;
+
+    public static int lightLevel = 15;
+
     public static boolean isEnabled(WrenchMode mode) {
 
         return switch (mode) {
@@ -19,12 +29,4 @@ public class SettingsState {
             case SETTINGS -> true;
         };
     }
-
-    public static boolean debugEnabled = true;
-    public static boolean terraformEnabled = true;
-    public static boolean buildEnabled = true;
-    public static boolean copyPasteEnabled = true;
-    public static boolean lightEnabled = true;
-    public static boolean nbtEnabled = true;
-    public static boolean utilityEnabled = true;
 }
