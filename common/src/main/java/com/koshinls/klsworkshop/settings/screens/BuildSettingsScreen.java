@@ -1,6 +1,7 @@
 package com.koshinls.klsworkshop.settings.screens;
 
 import com.koshinls.klsworkshop.settings.SettingsState;
+import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,42 +21,63 @@ public class BuildSettingsScreen extends Screen {
 
         this.addRenderableWidget(
                 Button.builder(
-                        getButtonText(),
-                        button -> {
-                            SettingsState.buildEnabled =
-                                    !SettingsState.buildEnabled;
+                                getButtonText(),
+                                button -> {
 
-                            button.setMessage(getButtonText());
-                        }
-                )
-                .bounds(
-                        this.width / 2 - 100,
-                        80,
-                        200,
-                        20
-                )
-                .build()
+                                    boolean newState =
+                                            !SettingsState.getStoredEnabled(
+                                                    WrenchMode.BUILD
+                                            );
+
+                                    SettingsState.setStoredEnabled(
+                                            WrenchMode.BUILD,
+                                            newState
+                                    );
+
+                                    button.setMessage(getButtonText());
+                                }
+                        )
+                        .bounds(
+                                this.width / 2 - 100,
+                                80,
+                                200,
+                                20
+                        )
+                        .build()
         );
 
         this.addRenderableWidget(
                 Button.builder(
-                        Component.literal("Done"),
-                        button -> this.onClose()
-                )
-                .bounds(
-                        this.width / 2 - 100,
-                        this.height - 40,
-                        200,
-                        20
-                )
-                .build()
+                                Component.literal("Done"),
+                                button -> this.onClose()
+                        )
+                        .bounds(
+                                this.width / 2 - 100,
+                                this.height - 40,
+                                200,
+                                20
+                        )
+                        .build()
         );
     }
 
     private Component getButtonText() {
+
+        if (!SettingsState.masterEnabled) {
+            return Component.literal(
+                    "Build Mode: OFF (Master OFF)"
+            );
+        }
+
         return Component.literal(
                 "Build Mode: " +
-                        (SettingsState.buildEnabled ? "ON" : "OFF")
+                        (
+                                SettingsState.getStoredEnabled(
+                                        WrenchMode.BUILD
+                                )
+                                        ? "ON"
+                                        : "OFF"
+                        )
         );
     }
 
@@ -86,6 +108,7 @@ public class BuildSettingsScreen extends Screen {
 
     @Override
     public void onClose() {
+
         if (this.minecraft != null) {
             this.minecraft.setScreen(parent);
         }

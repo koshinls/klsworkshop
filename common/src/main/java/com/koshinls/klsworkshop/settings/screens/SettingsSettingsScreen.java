@@ -20,30 +20,14 @@ public class SettingsSettingsScreen extends Screen {
 
         this.addRenderableWidget(
                 Button.builder(
-                                getAllModesButtonText(),
+                                getMasterButtonText(),
                                 button -> {
 
-                                    boolean allEnabled =
-                                            SettingsState.debugEnabled
-                                                    && SettingsState.terraformEnabled
-                                                    && SettingsState.buildEnabled
-                                                    && SettingsState.copyPasteEnabled
-                                                    && SettingsState.lightEnabled
-                                                    && SettingsState.nbtEnabled
-                                                    && SettingsState.utilityEnabled;
-
-                                    boolean newState = !allEnabled;
-
-                                    SettingsState.debugEnabled = newState;
-                                    SettingsState.terraformEnabled = newState;
-                                    SettingsState.buildEnabled = newState;
-                                    SettingsState.copyPasteEnabled = newState;
-                                    SettingsState.lightEnabled = newState;
-                                    SettingsState.nbtEnabled = newState;
-                                    SettingsState.utilityEnabled = newState;
+                                    SettingsState.masterEnabled =
+                                            !SettingsState.masterEnabled;
 
                                     button.setMessage(
-                                            getAllModesButtonText()
+                                            getMasterButtonText()
                                     );
                                 }
                         )
@@ -71,20 +55,13 @@ public class SettingsSettingsScreen extends Screen {
         );
     }
 
-    private Component getAllModesButtonText() {
-
-        boolean allEnabled =
-                SettingsState.debugEnabled
-                        && SettingsState.terraformEnabled
-                        && SettingsState.buildEnabled
-                        && SettingsState.copyPasteEnabled
-                        && SettingsState.lightEnabled
-                        && SettingsState.nbtEnabled
-                        && SettingsState.utilityEnabled;
+    private Component getMasterButtonText() {
 
         return Component.literal(
                 "All Modes: " +
-                        (allEnabled ? "ON" : "OFF")
+                        (SettingsState.masterEnabled
+                                ? "ON"
+                                : "OFF")
         );
     }
 

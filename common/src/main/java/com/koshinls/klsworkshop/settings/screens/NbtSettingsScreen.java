@@ -1,6 +1,7 @@
 package com.koshinls.klsworkshop.settings.screens;
 
 import com.koshinls.klsworkshop.settings.SettingsState;
+import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -20,42 +21,63 @@ public class NbtSettingsScreen extends Screen {
 
         this.addRenderableWidget(
                 Button.builder(
-                        getButtonText(),
-                        button -> {
-                            SettingsState.nbtEnabled =
-                                    !SettingsState.nbtEnabled;
+                                getButtonText(),
+                                button -> {
 
-                            button.setMessage(getButtonText());
-                        }
-                )
-                .bounds(
-                        this.width / 2 - 100,
-                        80,
-                        200,
-                        20
-                )
-                .build()
+                                    boolean newState =
+                                            !SettingsState.getStoredEnabled(
+                                                    WrenchMode.NBT
+                                            );
+
+                                    SettingsState.setStoredEnabled(
+                                            WrenchMode.NBT,
+                                            newState
+                                    );
+
+                                    button.setMessage(getButtonText());
+                                }
+                        )
+                        .bounds(
+                                this.width / 2 - 100,
+                                80,
+                                200,
+                                20
+                        )
+                        .build()
         );
 
         this.addRenderableWidget(
                 Button.builder(
-                        Component.literal("Done"),
-                        button -> this.onClose()
-                )
-                .bounds(
-                        this.width / 2 - 100,
-                        this.height - 40,
-                        200,
-                        20
-                )
-                .build()
+                                Component.literal("Done"),
+                                button -> this.onClose()
+                        )
+                        .bounds(
+                                this.width / 2 - 100,
+                                this.height - 40,
+                                200,
+                                20
+                        )
+                        .build()
         );
     }
 
     private Component getButtonText() {
+
+        if (!SettingsState.masterEnabled) {
+            return Component.literal(
+                    "NBT Mode: OFF (Master OFF)"
+            );
+        }
+
         return Component.literal(
                 "NBT Mode: " +
-                        (SettingsState.nbtEnabled ? "ON" : "OFF")
+                        (
+                                SettingsState.getStoredEnabled(
+                                        WrenchMode.NBT
+                                )
+                                        ? "ON"
+                                        : "OFF"
+                        )
         );
     }
 
@@ -86,6 +108,7 @@ public class NbtSettingsScreen extends Screen {
 
     @Override
     public void onClose() {
+
         if (this.minecraft != null) {
             this.minecraft.setScreen(parent);
         }

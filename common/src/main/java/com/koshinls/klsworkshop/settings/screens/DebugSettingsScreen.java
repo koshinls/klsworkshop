@@ -1,10 +1,11 @@
 package com.koshinls.klsworkshop.settings.screens;
 
+import com.koshinls.klsworkshop.settings.SettingsState;
+import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import com.koshinls.klsworkshop.settings.SettingsState;
 
 public class DebugSettingsScreen extends Screen {
 
@@ -20,10 +21,20 @@ public class DebugSettingsScreen extends Screen {
 
         this.addRenderableWidget(
                 Button.builder(
-                                getDebugButtonText(),
+                                getButtonText(),
                                 button -> {
-                                    SettingsState.debugEnabled = !SettingsState.debugEnabled;
-                                    button.setMessage(getDebugButtonText());
+
+                                    boolean newState =
+                                            !SettingsState.getStoredEnabled(
+                                                    WrenchMode.DEBUG
+                                            );
+
+                                    SettingsState.setStoredEnabled(
+                                            WrenchMode.DEBUG,
+                                            newState
+                                    );
+
+                                    button.setMessage(getButtonText());
                                 }
                         )
                         .bounds(
@@ -50,11 +61,23 @@ public class DebugSettingsScreen extends Screen {
         );
     }
 
-    private Component getDebugButtonText() {
+    private Component getButtonText() {
+
+        if (!SettingsState.masterEnabled) {
+            return Component.literal(
+                    "Debug Mode: OFF (Master OFF)"
+            );
+        }
 
         return Component.literal(
                 "Debug Mode: " +
-                        (SettingsState.debugEnabled ? "ON" : "OFF")
+                        (
+                                SettingsState.getStoredEnabled(
+                                        WrenchMode.DEBUG
+                                )
+                                        ? "ON"
+                                        : "OFF"
+                        )
         );
     }
 
@@ -65,7 +88,6 @@ public class DebugSettingsScreen extends Screen {
             int mouseY,
             float partialTick
     ) {
-
         this.renderBlurredBackground(partialTick);
 
         guiGraphics.drawCenteredString(

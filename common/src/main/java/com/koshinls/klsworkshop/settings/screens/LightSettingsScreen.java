@@ -1,7 +1,9 @@
 package com.koshinls.klsworkshop.settings.screens;
 
 import com.koshinls.klsworkshop.settings.SettingsState;
+import com.koshinls.klsworkshop.wrenchmodes.WrenchMode;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -20,19 +22,27 @@ public class LightSettingsScreen extends Screen {
 
         this.addRenderableWidget(
                 Button.builder(
-                                getModeButtonText(),
+                                getButtonText(),
                                 button -> {
-                                    SettingsState.lightEnabled =
-                                            !SettingsState.lightEnabled;
+
+                                    boolean newState =
+                                            !SettingsState.getStoredEnabled(
+                                                    WrenchMode.LIGHT
+                                            );
+
+                                    SettingsState.setStoredEnabled(
+                                            WrenchMode.LIGHT,
+                                            newState
+                                    );
 
                                     button.setMessage(
-                                            getModeButtonText()
+                                            getButtonText()
                                     );
                                 }
                         )
                         .bounds(
                                 this.width / 2 - 100,
-                                80,
+                                70,
                                 200,
                                 20
                         )
@@ -40,25 +50,12 @@ public class LightSettingsScreen extends Screen {
         );
 
         this.addRenderableWidget(
-                Button.builder(
-                                getLightLevelButtonText(),
-                                button -> {
-
-                                    SettingsState.lightLevel =
-                                            (SettingsState.lightLevel + 1) % 16;
-
-                                    button.setMessage(
-                                            getLightLevelButtonText()
-                                    );
-                                }
-                        )
-                        .bounds(
-                                this.width / 2 - 100,
-                                110,
-                                200,
-                                20
-                        )
-                        .build()
+                new LightLevelSlider(
+                        this.width / 2 - 100,
+                        105,
+                        200,
+                        20
+                )
         );
 
         this.addRenderableWidget(
@@ -76,21 +73,23 @@ public class LightSettingsScreen extends Screen {
         );
     }
 
-    private Component getModeButtonText() {
+    private Component getButtonText() {
+
+        if (!SettingsState.masterEnabled) {
+            return Component.literal(
+                    "Light Mode: OFF (Master OFF)"
+            );
+        }
 
         return Component.literal(
                 "Light Mode: " +
-                        (SettingsState.lightEnabled
-                                ? "ON"
-                                : "OFF")
-        );
-    }
-
-    private Component getLightLevelButtonText() {
-
-        return Component.literal(
-                "Light Level: " +
-                        SettingsState.lightLevel
+                        (
+                                SettingsState.getStoredEnabled(
+                                        WrenchMode.LIGHT
+                                )
+                                        ? "ON"
+                                        : "OFF"
+                        )
         );
     }
 
@@ -125,6 +124,51 @@ public class LightSettingsScreen extends Screen {
 
         if (this.minecraft != null) {
             this.minecraft.setScreen(parent);
+        }
+    }
+
+    private static class LightLevelSlider
+            extends AbstractSliderButton {
+
+        public LightLevelSlider(
+                int x,
+                int y,
+                int width,
+                int height
+        ) {
+            super(
+                    x,
+                    y,
+                    width,
+                    height,
+                    Component.empty(),
+                    SettingsState.lightLevel / 15.0
+            );
+
+            updateMessage();
+        }
+
+        @Override
+        protected void updateMessage() {
+
+            setMessage(
+                    Component.literal(
+                            "Light Level: " +
+                                    SettingsState.lightLevel +
+                                    " / 15"
+                    )
+            );
+        }
+
+        @Override
+        protected void applyValue() {
+
+            SettingsState.lightLevel =
+                    (int) Math.round(
+                            this.value * 15.0
+                    );
+
+            updateMessage();
         }
     }
 }
