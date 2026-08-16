@@ -9,9 +9,9 @@ import com.koshinls.klsworkshop.platform.NeoForgeCreativeTabHelper;
 import com.koshinls.klsworkshop.client.ModeInputHandler;
 
 @Mod(Constants.MOD_ID)
-public class ExampleMod {
+public class KLSWorkshopNeoForge {
 
-    public ExampleMod(IEventBus eventBus) {
+    public KLSWorkshopNeoForge(IEventBus eventBus) {
 
         NeoForgeRegistryHelper.register(eventBus);
         NeoForgeCreativeTabHelper.register(eventBus);

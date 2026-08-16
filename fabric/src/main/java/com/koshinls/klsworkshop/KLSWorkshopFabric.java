@@ -4,7 +4,7 @@ import com.koshinls.klsworkshop.network.NetworkManager;
 import com.koshinls.klsworkshop.platform.Services;
 import net.fabricmc.api.ModInitializer;
 
-public class ExampleMod implements ModInitializer {
+public class KLSWorkshopFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
